@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:weatherapp/app/modules/home/controllers/home_controller.dart';
 
 class WeatherDetails extends GetView<HomeController> {
@@ -7,6 +8,16 @@ class WeatherDetails extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+
+    var date = DateTime.now();
+    var format = DateFormat.yMMMEd();
+    String dateNow =  format.format(date);
+
+    var format1 = DateFormat("HH:mm");
+    String timeNow =  format1.format(date);
+
+    print(timeNow);
+
     return SizedBox(
        width: Get.mediaQuery.size.width,
        child: Padding(
@@ -45,14 +56,15 @@ class WeatherDetails extends GetView<HomeController> {
                      Icons.calendar_month_outlined,
                      color: Colors.white,
                    ),
-                   Text("Dae",
+                   Text(
+                     dateNow,
                      style: TextStyle(
                          color: Colors.white
                      ),)
                  ],
                ),
                Text(
-                 "Time",
+                 timeNow,
                  style: TextStyle(
                      color: Colors.white
                  ),)
