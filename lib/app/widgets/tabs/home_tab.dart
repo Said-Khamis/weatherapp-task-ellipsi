@@ -10,44 +10,89 @@ import 'package:flutter/material.dart';
 import 'package:weatherapp/app/widgets/weather_details.dart';
 import '../hewa_tabs.dart';
 
-class HomeTab extends GetView<HomeController> {
+class HomeTab extends StatelessWidget {
    HomeTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     var controller = Get.put(HomeController());
      return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
               title: HewaWidgetTabs(size: 20.0,widthSize: 70, heightSize: 25,),
               elevation: 0.0,
               centerTitle: true,
+              backgroundColor: Colors.transparent,
           ),
-           body: Obx(() {
+            body: Obx(() {
              return Container(
                width: Get.mediaQuery.size.width,
                height: Get.mediaQuery.size.height,
-               decoration: BoxDecoration(
-                   color: Colors.blue
+               decoration: const BoxDecoration(
+                   color: Colors.blue,
+                   image: DecorationImage(
+                       image: AssetImage(
+                         "assets/background.png",
+                       ),
+                       fit: BoxFit.cover
+                   )
                ),
                child: controller.isLoading.value == true
-                   ? Center(
+                   ? const Center(
                  child: CircularProgressIndicator(
                    color: Colors.white,
                  ),
                )
-                   : Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Location(locationName: controller.weatherData.value.name),
-                   SizedBox(height: 35.0,),
-                   Temperature(temp: controller.weatherData.value.main!.temp),
-                   SizedBox(height: 15.0,),
-                   WeatherCondition(),
-                   SizedBox(height: 25.0,),
-                   WeatherDetails()
-                 ],
-               ),
+                   : Stack(
+                     children: [
+                       Positioned(
+                           top: 100.0,
+                           left: 0.0,
+                           right: 0.0,
+                           child: Location(
+                               locationName: controller.weatherData.value != null
+                                   ? ( controller.weatherData.value!.name)!
+                                   : " "
+                           )
+                       ),
+                       Align(
+                         alignment: Alignment.center,
+                         child: Column(
+                           mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Temperature(
+                                 icon: controller.weatherData.value != null
+                                     ?(controller.weatherData.value!.weather![0].icon)!
+                                      : "No",
+                                 temp: controller.weatherData.value != null
+                                     ? double.tryParse(controller.weatherData.value!.main!.temp.toString())
+                                     : 0.0 ),
+                             WeatherCondition(
+                               feelsLike: controller.weatherData.value != null
+                                   ? double.tryParse((controller.weatherData.value!.main!.feelsLike.toString()))!
+                                   : 0.0,
+                               condition: controller.weatherData.value != null
+                                   ? (controller.weatherData.value!.weather![0].main)!
+                                   : "No",
+                             )
+                           ],
+                         ),
+                       ),
+                       Positioned(
+                       bottom: 0.0,
+                       child:  WeatherDetails(
+                         windSpeed: controller.weatherData.value != null
+                             ? (controller.weatherData.value!.wind!.speed)!
+                             : 0.0,
+                         humidity: controller.weatherData.value != null
+                             ? (controller.weatherData.value!.main!.humidity)!
+                             : 0,
+                       )
+                   )
+                     ],
+                  ),
              );
            })
         )

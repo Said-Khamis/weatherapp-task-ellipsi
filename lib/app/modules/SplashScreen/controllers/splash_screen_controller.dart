@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:weatherapp/app/routes/app_pages.dart';
 
@@ -11,14 +12,12 @@ class SplashScreenController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
 
-    Timer(const Duration(seconds: 5), () {
-         Get.offAndToNamed(AppPages.HOME);
-         //Get.toNamed(AppPages.HOME);
+    Timer(const Duration(seconds: 3), () {
+      Get.offAndToNamed(AppPages.HOME);
+      FlutterNativeSplash.remove();
     });
-
-    print("onInit");
+    super.onInit();
   }
 
   @override

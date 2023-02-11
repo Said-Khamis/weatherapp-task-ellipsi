@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:weatherapp/app/common/DefaultStrings.dart';
 import 'package:weatherapp/app/data/weather_data_model.dart';
@@ -13,7 +16,7 @@ class HomeController extends GetxController {
 
   var selectedIndex = 0.obs;
   var isManuallyTapped = false.obs;
-  var weatherData = WeatherData().obs;
+  var weatherData = Rxn<WeatherData>();
   var isLoading = false.obs;
 
   List<Widget> widgetOptions = <Widget>[
@@ -23,6 +26,7 @@ class HomeController extends GetxController {
   ];
 
   void onItemTaped(int index){
+
     if(!isManuallyTapped.value){
       if(index != 2){
         selectedIndex.value = index;
@@ -33,38 +37,13 @@ class HomeController extends GetxController {
 
   }
 
-  void _manuallySetIndex(int index) {
+  void manuallySetIndex(int index) {
      selectedIndex.value = index;
      isManuallyTapped.value = true;
   }
 
   final editTextSearch = TextEditingController();
 
-  searchCity(){
-
-    isLoading.value = true;
-
-    String citName = editTextSearch.text.trim().toString();
-    HomeProvider().searchWeatherByCityName(citName)
-        .then((value) {
-      if(value != null){
-        weatherData.value = WeatherData.fromJson(value);
-      }
-      isLoading.value = false;
-      _manuallySetIndex(2);
-
-      print(value);
-
-    }, onError: (error){
-
-          Get.snackbar("Message", error.toString());
-          isLoading.value = false;
-
-    }).whenComplete(() {
-      isLoading.value = false;
-
-    });
-  }
 
   getDarWeather(){
 
@@ -76,7 +55,6 @@ class HomeController extends GetxController {
         weatherData.value = WeatherData.fromJson(value);
       }
       isLoading.value = false;
-      print(value);
 
     }, onError: (error){
 
@@ -104,7 +82,6 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    weatherData.refresh();
   }
 
 }

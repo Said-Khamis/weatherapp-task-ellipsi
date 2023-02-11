@@ -4,13 +4,17 @@ import 'package:get/get.dart';
 import 'package:weatherapp/app/modules/home/controllers/home_controller.dart';
 import 'dart:math';
 
-class WeatherCondition extends GetView<HomeController> {
-  const WeatherCondition({Key? key}) : super(key: key);
+class WeatherCondition extends StatelessWidget {
+   const WeatherCondition({Key? key, required this.feelsLike, required this.condition}) : super(key: key);
+
+  final double feelsLike;
+  final String condition;
 
   @override
   Widget build(BuildContext context) {
-
-    double toCelsius = (controller.weatherData.value.main!.feelsLike)! -  273.15;
+    //var controller = Get.put(HomeController());
+    //double toCelsius = (controller.weatherData.value.main!.feelsLike)! -  273.15;
+    double toCelsius = (feelsLike) -  273.15;
 
     return Column(
        mainAxisAlignment: MainAxisAlignment.center,
@@ -21,14 +25,14 @@ class WeatherCondition extends GetView<HomeController> {
               RichText(
                 text: TextSpan(
                   text: "Feels like",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17.0,
                   ),
                   children: [
                     TextSpan(
                         text: "  ${toCelsius.round()} ",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.amber,
                             fontWeight: FontWeight.bold
                         ),
@@ -37,12 +41,12 @@ class WeatherCondition extends GetView<HomeController> {
 
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 20,
                 height: 30,
                 child: Stack(
                   alignment: AlignmentDirectional.center,
-                  children: [
+                  children: const [
                     Positioned(
                       child: Text("0",
                         style: TextStyle(
@@ -58,15 +62,15 @@ class WeatherCondition extends GetView<HomeController> {
                           fontSize: 17.0,
                           color: Colors.white
                       ),)
-
                   ],
                 ),
               )
             ],
           ),
           Text(
-            (controller.weatherData.value.weather![0].main)!,
-          style: TextStyle(
+            //(controller.weatherData.value.weather![0].main)!,
+          condition,
+          style: const TextStyle(
              color: Colors.white
           ),)
        ],

@@ -17,8 +17,14 @@ class SplashScreenView extends GetView<SplashScreenController> {
           return  Container(
               width: Get.mediaQuery.size.width,
               height: Get.mediaQuery.size.height,
-              decoration: BoxDecoration(
-                 color: Colors.blue
+              decoration: const BoxDecoration(
+                 color: Colors.blue,
+                 image: DecorationImage(
+                     image: AssetImage(
+                       "assets/background.png",
+                     ),
+                   fit: BoxFit.cover
+                 )
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,

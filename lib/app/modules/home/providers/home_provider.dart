@@ -13,8 +13,6 @@ class HomeProvider extends GetConnect {
       var response = await get("${AppConfig.baseUrl}/weather?q=$citName&appid=${AppConfig.apiKey}");
       //print(response.body);
       responseJson = _returnResponse(response);
-    }catch (e){
-       print(e);
     }on SocketException {
       throw FetchDataException('No Internet connection');
     }

@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherapp/app/modules/home/controllers/home_controller.dart';
 
-class WeatherDetails extends GetView<HomeController> {
-  const WeatherDetails({Key? key}) : super(key: key);
+class WeatherDetails extends StatelessWidget {
+   const WeatherDetails({Key? key, required this.windSpeed, required this.humidity}) : super(key: key);
+
+  final double windSpeed;
+  final int humidity;
 
   @override
   Widget build(BuildContext context) {
+
+    //var controller = Get.put(HomeController());
 
     var date = DateTime.now();
     var format = DateFormat.yMMMEd();
@@ -21,7 +26,7 @@ class WeatherDetails extends GetView<HomeController> {
     return SizedBox(
        width: Get.mediaQuery.size.width,
        child: Padding(
-         padding: EdgeInsets.all(10.0),
+         padding: const EdgeInsets.all(10.0),
         child: Column(
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
@@ -29,57 +34,62 @@ class WeatherDetails extends GetView<HomeController> {
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Row(
-                 children: [
+                 children: const [
                    Icon(
                      Icons.speed_outlined,
                      color: Colors.white,
                    ),
+                   SizedBox(width: 5.0,),
                    Text("Windspeed",
                      style: TextStyle(
                          color: Colors.white
                      ),)
                  ],
                ),
-               Text("${controller.weatherData.value.wind!.speed} km/h",
-                 style: TextStyle(
+               Text(
+                 //"${controller.weatherData.value.wind!.speed} km/h",
+                 "$windSpeed km/h",
+                 style: const TextStyle(
                      color: Colors.white
                  ),)
              ],
            ),
-           SizedBox(height: 10.0,),
+           const SizedBox(height: 10.0,),
            Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Row(
                  children: [
-                   Icon(
+                   const Icon(
                      Icons.calendar_month_outlined,
                      color: Colors.white,
                    ),
+                   const SizedBox(width: 5.0,),
                    Text(
                      dateNow,
-                     style: TextStyle(
+                     style: const TextStyle(
                          color: Colors.white
                      ),)
                  ],
                ),
                Text(
                  timeNow,
-                 style: TextStyle(
+                 style: const TextStyle(
                      color: Colors.white
                  ),)
              ],
            ),
-           SizedBox(height: 10.0,),
+           const SizedBox(height: 10.0,),
            Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Row(
-                 children: [
+                 children: const [
                    Icon(
-                     Icons.temple_buddhist,
+                     Icons.cloud,
                      color: Colors.white,
                    ),
+                   SizedBox(width: 5.0,),
                    Text(
                      "Humidity",
                      style: TextStyle(
@@ -87,13 +97,15 @@ class WeatherDetails extends GetView<HomeController> {
                      ),)
                  ],
                ),
-               Text("${controller.weatherData.value.main!.humidity} %",
-                 style: TextStyle(
+               Text(
+                 //"${controller.weatherData.value.main!.humidity} %",
+                 "$humidity %",
+                 style: const TextStyle(
                      color: Colors.white
                  ),)
              ],
            ),
-           SizedBox(height: 10.0,),
+           const SizedBox(height: 10.0,),
          ],
        ),),
     );

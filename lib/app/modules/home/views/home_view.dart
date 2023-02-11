@@ -15,13 +15,13 @@ class HomeView extends GetView<HomeController> {
            bottomNavigationBar: BottomNavigationBar(
              showSelectedLabels: false,
              showUnselectedLabels: false,
-             selectedItemColor: Colors.amber,
+             selectedItemColor: const Color.fromRGBO(255, 165, 0, 1),
              unselectedItemColor: Colors.white,
-             backgroundColor: Colors.blue,
+             backgroundColor: const Color.fromRGBO(34, 68, 150, 1),
              type: BottomNavigationBarType.fixed,
              currentIndex: controller.selectedIndex.value,
              onTap: controller.onItemTaped,
-             items: [
+             items: const [
                BottomNavigationBarItem(
                    icon: Icon(
                      Icons.home_filled,
@@ -36,14 +36,14 @@ class HomeView extends GetView<HomeController> {
                ),
                BottomNavigationBarItem(
                    icon: Icon(
-                     Icons.arrow_back_ios,
+                     Icons.reply,
                    ),
                    label: "Back",
                )
              ],
            ) ,
-           body:  Center(
-             child: controller.widgetOptions.elementAt(controller.selectedIndex.value),
+           body: controller.widgetOptions.elementAt(
+             controller.selectedIndex.value
            ),
        ));
     });

@@ -5,17 +5,22 @@ import 'package:weatherapp/app/common/config.dart';
 import 'package:weatherapp/app/modules/home/controllers/home_controller.dart';
 import 'dart:math';
 
-class Temperature extends GetView<HomeController> {
-  const Temperature({Key? key, required this.temp}) : super(key: key);
+class Temperature extends StatelessWidget {
+  const Temperature({Key? key, required this.temp, required this.icon}) : super(key: key);
 
   final double? temp;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
 
-    double toCelsius = (controller.weatherData.value.main!.temp)! -  273.15;
-
-    print(toCelsius);
+    //var controller = Get.put(HomeController());
+    //double toCelsius = (controller.weatherData.value!.main!.temp)! -  273.15;
+    double toCelsius = 0.0;
+    if(temp != null){
+       toCelsius= (temp)! -  273.15;
+    }
+    print(icon);
 
     return SizedBox(
       width: 150,
@@ -30,14 +35,14 @@ class Temperature extends GetView<HomeController> {
               width: 100.0,
               height: 100.0,
               child: Image.network(
-                "${AppConfig.iconUrl}${controller.weatherData.value.weather![0].icon}@2x.png",
+                "${AppConfig.iconUrl}${icon.toString()}@2x.png",
                 fit: BoxFit.contain,
               ),
             ),
           ),
           Text(
             toCelsius.round().toString(),
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 80.0,
                 color: Colors.white,
                 fontWeight: FontWeight.bold
@@ -45,21 +50,21 @@ class Temperature extends GetView<HomeController> {
           Positioned(
               right: 0.0,
               bottom: 40.0,
-              child: Container(
+              child: SizedBox(
                 width: 30,
                 height: 30,
                 child: Stack(
                     alignment: AlignmentDirectional.center,
-                    children: [
+                    children: const [
                       Positioned(
+                        top: 0.0,
+                        left: 0.0,
                         child: Text("0",
                           style: TextStyle(
                               fontSize: 10.0,
                               color: Colors.white,
                               fontWeight: FontWeight.bold
                           ),),
-                        top: 0.0,
-                        left: 0.0,
                       ),
                       Text("C",
                         style: TextStyle(

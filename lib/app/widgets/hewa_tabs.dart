@@ -34,7 +34,7 @@ class HewaWidgetTabs extends StatelessWidget {
                 height: 10.0,
                 width: 10.0,
                 decoration: const BoxDecoration(
-                    color: Colors.amber,
+                    color: Color.fromRGBO(255, 165, 0, 1),
                     borderRadius: BorderRadius.all(
                         Radius.circular(20.0)
                     )
